@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowUpRight, Check, Copy } from 'lucide-react';
 import { Language, UI_COPY } from '../data/portfolioData';
+import { TechButton } from './TechButton';
 
 interface FooterProps {
   lang: Language;
@@ -42,46 +43,46 @@ export function Footer({ lang, onOpenContact }: FooterProps) {
   };
 
   return (
-    <footer id="contact-footer" className="bg-white pt-16 pb-12">
+    <footer id="contact-footer" className="bg-[#080C17] pt-16 pb-12">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10">
         {/* Top CTA Row */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-12 border-b border-[#E2E8F0]">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-12 border-b border-[#1E263D]">
           <div>
-            <p className="text-xs font-medium text-[#2563EB] mb-2">
+            <p className="text-xs font-medium text-[#7DD3FC] mb-2 tracking-wide">
               {UI_COPY.footer.tagline[lang]}
             </p>
-            <h2 className="font-display font-bold text-2xl md:text-4xl text-[#0F172A] tracking-tight">
+            <h2 className="font-display font-bold text-2xl md:text-4xl bg-gradient-to-r from-[#F8FAFC] via-[#E2E8F0] to-[#94A3B8] bg-clip-text text-transparent tracking-tight">
               hello@soralin.design
             </h2>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <button
-              type="button"
+            <TechButton
+              variant="secondary"
               onClick={handleCopyEmail}
-              className="inline-flex items-center gap-2 px-4 py-3 text-xs md:text-sm font-medium text-[#0F172A] bg-[#F8FAFC] border border-[#CBD5E1] hover:border-[#0F172A] rounded-xl transition-colors cursor-pointer whitespace-nowrap shrink-0"
+              className="px-4 py-3 text-xs md:text-sm"
             >
               {copied ? (
                 <>
-                  <Check className="w-4 h-4 text-[#2563EB]" />
-                  <span className="text-[#2563EB]">{UI_COPY.footer.copied[lang]}</span>
+                  <Check className="w-4 h-4 text-[#7DD3FC]" />
+                  <span className="text-[#7DD3FC]">{UI_COPY.footer.copied[lang]}</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-4 h-4 text-[#64748B]" />
+                  <Copy className="w-4 h-4 text-[#94A3B8] group-hover:text-[#7DD3FC] transition-colors" />
                   <span>{UI_COPY.footer.copyEmail[lang]}</span>
                 </>
               )}
-            </button>
+            </TechButton>
 
-            <button
-              type="button"
+            <TechButton
+              variant="primary"
               onClick={onOpenContact}
-              className="inline-flex items-center gap-2 px-5 py-3 text-xs md:text-sm font-medium text-white bg-[#0F172A] hover:bg-[#2563EB] rounded-xl transition-colors cursor-pointer whitespace-nowrap shrink-0"
+              className="px-5 py-3 text-xs md:text-sm"
             >
               <span>{UI_COPY.ctaPrimary[lang]}</span>
-              <ArrowUpRight className="w-4 h-4" />
-            </button>
+              <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </TechButton>
           </div>
         </div>
 
@@ -89,28 +90,28 @@ export function Footer({ lang, onOpenContact }: FooterProps) {
         <div className="pt-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 text-xs text-[#64748B]">
           <div>{UI_COPY.footer.rights[lang]}</div>
 
-          <div className="flex flex-wrap items-center gap-6 font-mono-tabular">
+          <div className="flex flex-wrap items-center gap-6 font-mono-tabular text-[#94A3B8]">
             <span>ZRH {times.zurich}</span>
             <span>SHA {times.shanghai}</span>
             <span>TYO {times.tokyo}</span>
           </div>
 
-          <div className="flex items-center gap-6 font-medium text-[#475569]">
+          <div className="flex items-center gap-6 font-medium text-[#94A3B8]">
             <a
               href="#work"
-              className="hover:text-[#0F172A] transition-colors whitespace-nowrap"
+              className="hover:text-[#7DD3FC] transition-colors whitespace-nowrap"
             >
               {UI_COPY.nav.work[lang]}
             </a>
             <a
               href="#capabilities"
-              className="hover:text-[#0F172A] transition-colors whitespace-nowrap"
+              className="hover:text-[#7DD3FC] transition-colors whitespace-nowrap"
             >
               {UI_COPY.nav.capabilities[lang]}
             </a>
             <a
               href="#motion-lab"
-              className="hover:text-[#0F172A] transition-colors whitespace-nowrap"
+              className="hover:text-[#7DD3FC] transition-colors whitespace-nowrap"
             >
               {UI_COPY.nav.lab[lang]}
             </a>

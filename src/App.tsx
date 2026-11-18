@@ -18,7 +18,7 @@ export default function App() {
 
   return (
     <MotionConfig reducedMotion="user">
-      <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] flex flex-col">
+      <div className="min-h-screen bg-[#05070E] text-[#F1F5F9] flex flex-col">
         <Navbar lang={lang} onOpenContact={() => setIsContactOpen(true)} />
 
         <main className="flex-1">

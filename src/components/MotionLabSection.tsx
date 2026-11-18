@@ -34,52 +34,54 @@ export function MotionLabSection({ lang }: MotionLabSectionProps) {
       : 'bg-arch-grid';
 
   return (
-    <section id="motion-lab" className="py-16 md:py-24 bg-[#F8FAFC] border-b border-[#E2E8F0]">
+    <section id="motion-lab" className="py-16 md:py-24 bg-[#05070E] border-b border-[#1E263D]">
       <div className="max-w-[1280px] mx-auto px-6 md:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           {/* Left Control Panel */}
           <div className="lg:col-span-5 space-y-8">
             <div>
-              <p className="text-xs font-medium text-[#2563EB] mb-2">
+              <p className="text-xs font-medium text-[#7DD3FC] mb-2 tracking-wide">
                 {UI_COPY.labSection.eyebrow[lang]}
               </p>
               <h2
-                className="font-display font-bold text-2xl md:text-3xl text-[#0F172A] tracking-tight leading-snug mb-4"
+                className="font-display font-bold text-2xl md:text-3xl text-[#F8FAFC] tracking-tight leading-snug mb-4"
                 style={{ textWrap: 'balance' }}
               >
                 {UI_COPY.labSection.title[lang]}
               </h2>
-              <p className="text-sm text-[#475569] leading-relaxed">
+              <p className="text-sm text-[#94A3B8] leading-relaxed">
                 {UI_COPY.labSection.description[lang]}
               </p>
             </div>
 
             {/* Grid Density Selector */}
             <div className="space-y-2.5">
-              <div className="text-xs font-medium text-[#0F172A]">
+              <div className="text-xs font-medium text-[#E2E8F0]">
                 {UI_COPY.labSection.gridDensityLabel[lang]}
               </div>
-              <div className="inline-flex p-1 bg-[#E2E8F0]/75 rounded-xl border border-[#E2E8F0]">
+              <div className="inline-flex p-1 bg-[#0C1222] rounded-xl border border-[#1E263D]">
                 {([16, 32, 48] as GridDensity[]).map((size) => {
                   const active = gridDensity === size;
                   return (
-                    <button
+                    <motion.button
                       key={size}
                       type="button"
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.96 }}
                       onClick={() => setGridDensity(size)}
-                      className={`relative px-4 py-2 text-xs font-mono-tabular font-medium rounded-lg transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
-                        active ? 'text-[#0F172A]' : 'text-[#64748B] hover:text-[#0F172A]'
+                      className={`relative px-4 py-2 text-xs font-mono-tabular font-medium rounded-lg hover:rounded-full transition-[border-radius,color] duration-200 cursor-pointer whitespace-nowrap shrink-0 ${
+                        active ? 'text-[#F8FAFC]' : 'text-[#64748B] hover:text-[#7DD3FC]'
                       }`}
                     >
                       {active && (
                         <motion.span
                           layoutId="gridDensityActive"
                           transition={springConfig}
-                          className="absolute inset-0 bg-white rounded-lg border border-[#CBD5E1]/75"
+                          className="absolute inset-0 bg-[#172038] rounded-lg border border-[#7DD3FC]/45"
                         />
                       )}
                       <span className="relative z-10">{size}px</span>
-                    </button>
+                    </motion.button>
                   );
                 })}
               </div>
@@ -87,25 +89,28 @@ export function MotionLabSection({ lang }: MotionLabSectionProps) {
 
             {/* Motion Damping Preset */}
             <div className="space-y-2.5">
-              <div className="text-xs font-medium text-[#0F172A]">
+              <div className="text-xs font-medium text-[#E2E8F0]">
                 {UI_COPY.labSection.physicsLabel[lang]}
               </div>
               <div className="flex flex-wrap gap-2">
                 {UI_COPY.labSection.presets.map((item) => {
                   const active = preset === item.id;
                   return (
-                    <button
+                    <motion.button
                       key={item.id}
                       type="button"
+                      whileHover={{ scale: 1.03, y: -1 }}
+                      whileTap={{ scale: 0.96 }}
+                      transition={{ type: 'spring', stiffness: 460, damping: 28 }}
                       onClick={() => setPreset(item.id as PhysicsPreset)}
-                      className={`px-3.5 py-2 text-xs font-medium rounded-lg border transition-all duration-150 cursor-pointer whitespace-nowrap shrink-0 ${
+                      className={`px-3.5 py-2 text-xs font-medium border transition-[border-radius,background-color,border-color,color] duration-200 cursor-pointer whitespace-nowrap shrink-0 ${
                         active
-                          ? 'bg-[#0F172A] text-white border-[#0F172A]'
-                          : 'bg-white text-[#475569] border-[#E2E8F0] hover:border-[#94A3B8] hover:text-[#0F172A]'
+                          ? 'bg-gradient-to-r from-[#7DD3FC] to-[#A78BFA] text-[#05070E] border-[#7DD3FC] rounded-[20px]'
+                          : 'bg-[#0C1222] text-[#94A3B8] border-[#1E263D] rounded-lg hover:rounded-[20px] hover:border-[#7DD3FC] hover:text-[#7DD3FC] hover:bg-[#131B30]'
                       }`}
                     >
                       {item.label[lang]}
-                    </button>
+                    </motion.button>
                   );
                 })}
               </div>
@@ -113,39 +118,42 @@ export function MotionLabSection({ lang }: MotionLabSectionProps) {
 
             {/* Reset Positions */}
             <div className="pt-2">
-              <button
+              <motion.button
                 type="button"
+                whileHover={{ scale: 1.03, y: -1 }}
+                whileTap={{ scale: 0.96 }}
+                transition={{ type: 'spring', stiffness: 460, damping: 28 }}
                 onClick={() => {
                   setResetKey((k) => k + 1);
                   setDialAngle(45);
                   setToggleState(true);
                   setActiveTile('dial');
                 }}
-                className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-medium text-[#0F172A] bg-white border border-[#CBD5E1] hover:border-[#0F172A] rounded-xl transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                className="group inline-flex items-center gap-2 px-4 py-2.5 text-xs font-medium text-[#E2E8F0] bg-[#0C1222] border border-[#1E263D] hover:border-[#7DD3FC] hover:bg-[#131B30] hover:text-[#7DD3FC] rounded-xl hover:rounded-[22px] transition-[border-radius,background-color,border-color,color] duration-200 cursor-pointer whitespace-nowrap shrink-0"
               >
-                <RotateCcw className="w-3.5 h-3.5" />
+                <RotateCcw className="w-3.5 h-3.5 transition-transform duration-300 group-hover:-rotate-90" />
                 <span>{UI_COPY.labSection.resetLabel[lang]}</span>
-              </button>
+              </motion.button>
             </div>
           </div>
 
-          {/* Right Interactive Flat Grid Stage */}
+          {/* Right Interactive Cosmic Grid Stage */}
           <div className="lg:col-span-7">
             <div
               ref={constraintsRef}
-              className={`relative min-h-[420px] md:min-h-[460px] rounded-2xl border border-[#CBD5E1] bg-white ${gridClass} overflow-hidden p-5 md:p-7 flex flex-col justify-between`}
+              className={`relative min-h-[420px] md:min-h-[460px] rounded-2xl border border-[#1E263D] bg-[#080C17] ${gridClass} overflow-hidden p-5 md:p-7 flex flex-col justify-between`}
             >
               {/* Top Stage Metadata */}
               <div className="flex items-center justify-between text-xs font-mono-tabular text-[#64748B] pointer-events-none">
                 <span>
-                  {lang === 'zh' ? '可拖拽画布模块' : 'Draggable Flat Modules'}
+                  {lang === 'zh' ? '可拖拽画布模块' : 'Draggable Tech Modules'}
                 </span>
-                <span>
+                <span className="text-[#7DD3FC]">
                   {gridDensity}px · {preset}
                 </span>
               </div>
 
-              {/* Draggable Flat Modules Grid */}
+              {/* Draggable Modules Grid */}
               <div
                 key={resetKey}
                 className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-auto py-4"
@@ -160,36 +168,38 @@ export function MotionLabSection({ lang }: MotionLabSectionProps) {
                   whileDrag={{ scale: 1.02, zIndex: 20 }}
                   transition={springConfig}
                   onPointerDown={() => setActiveTile('dial')}
-                  className={`p-5 rounded-xl bg-white border cursor-grab active:cursor-grabbing select-none transition-colors ${
-                    activeTile === 'dial' ? 'border-[#2563EB]' : 'border-[#E2E8F0]'
+                  className={`p-5 rounded-xl bg-[#0C1222]/95 border cursor-grab active:cursor-grabbing select-none transition-colors ${
+                    activeTile === 'dial' ? 'border-[#7DD3FC]' : 'border-[#1E263D]'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-medium text-[#0F172A]">
+                    <span className="text-xs font-medium text-[#F8FAFC]">
                       {lang === 'zh' ? '步进旋钮模块' : 'Detent Rotary'}
                     </span>
-                    <Move className="w-3.5 h-3.5 text-[#94A3B8]" />
+                    <Move className="w-3.5 h-3.5 text-[#64748B]" />
                   </div>
                   <div className="flex items-center justify-between gap-4">
-                    <button
+                    <motion.button
                       type="button"
+                      whileHover={{ scale: 1.08 }}
+                      whileTap={{ scale: 0.94 }}
                       onClick={(e) => {
                         e.stopPropagation();
                         setDialAngle((prev) => (prev + 45) % 360);
                       }}
-                      aria-label="Rotate flat dial 45 degrees"
-                      className="relative w-14 h-14 rounded-full bg-[#F8FAFC] border border-[#CBD5E1] hover:border-[#2563EB] flex items-center justify-center cursor-pointer transition-colors"
+                      aria-label="Rotate dial 45 degrees"
+                      className="relative w-14 h-14 rounded-full bg-[#05070E] border border-[#24304D] hover:border-[#7DD3FC] flex items-center justify-center cursor-pointer transition-colors"
                     >
                       <motion.div
                         animate={{ rotate: dialAngle }}
                         transition={springConfig}
                         className="w-full h-full flex items-start justify-center pt-1.5"
                       >
-                        <span className="w-1.5 h-3 rounded-full bg-[#2563EB]" />
+                        <span className="w-1.5 h-3 rounded-full bg-gradient-to-b from-[#7DD3FC] to-[#A78BFA]" />
                       </motion.div>
-                    </button>
+                    </motion.button>
                     <div className="text-right">
-                      <div className="font-mono-tabular text-xl font-bold text-[#0F172A]">
+                      <div className="font-mono-tabular text-xl font-bold text-[#F8FAFC]">
                         {dialAngle}°
                       </div>
                       <div className="text-[11px] text-[#64748B]">
@@ -199,7 +209,7 @@ export function MotionLabSection({ lang }: MotionLabSectionProps) {
                   </div>
                 </motion.div>
 
-                {/* Module 2: Tactile Flat Switch */}
+                {/* Module 2: Tactile Switch */}
                 <motion.div
                   drag
                   dragConstraints={constraintsRef}
@@ -209,15 +219,15 @@ export function MotionLabSection({ lang }: MotionLabSectionProps) {
                   whileDrag={{ scale: 1.02, zIndex: 20 }}
                   transition={springConfig}
                   onPointerDown={() => setActiveTile('switch')}
-                  className={`p-5 rounded-xl bg-white border cursor-grab active:cursor-grabbing select-none transition-colors ${
-                    activeTile === 'switch' ? 'border-[#2563EB]' : 'border-[#E2E8F0]'
+                  className={`p-5 rounded-xl bg-[#0C1222]/95 border cursor-grab active:cursor-grabbing select-none transition-colors ${
+                    activeTile === 'switch' ? 'border-[#7DD3FC]' : 'border-[#1E263D]'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-xs font-medium text-[#0F172A]">
+                    <span className="text-xs font-medium text-[#F8FAFC]">
                       {lang === 'zh' ? '阻尼开关切换' : 'Tactile Switch'}
                     </span>
-                    <Move className="w-3.5 h-3.5 text-[#94A3B8]" />
+                    <Move className="w-3.5 h-3.5 text-[#64748B]" />
                   </div>
                   <div className="flex items-center justify-between">
                     <button
@@ -228,19 +238,19 @@ export function MotionLabSection({ lang }: MotionLabSectionProps) {
                         e.stopPropagation();
                         setToggleState((s) => !s);
                       }}
-                      className={`w-14 h-8 p-1 rounded-lg border transition-colors cursor-pointer flex items-center ${
+                      className={`w-14 h-8 p-1 rounded-lg hover:rounded-full border transition-all duration-200 cursor-pointer flex items-center ${
                         toggleState
-                          ? 'bg-[#2563EB] border-[#2563EB] justify-end'
-                          : 'bg-[#F1F5F9] border-[#CBD5E1] justify-start'
+                          ? 'bg-gradient-to-r from-[#7DD3FC] to-[#A78BFA] border-[#7DD3FC] justify-end'
+                          : 'bg-[#05070E] border-[#24304D] justify-start'
                       }`}
                     >
                       <motion.span
                         layout
                         transition={springConfig}
-                        className="w-6 h-6 bg-white rounded-md"
+                        className="w-6 h-6 bg-[#05070E] rounded-md"
                       />
                     </button>
-                    <span className="font-mono-tabular text-xs font-medium text-[#475569]">
+                    <span className="font-mono-tabular text-xs font-medium text-[#94A3B8]">
                       {toggleState
                         ? lang === 'zh'
                           ? '已锁定网格'
@@ -252,7 +262,7 @@ export function MotionLabSection({ lang }: MotionLabSectionProps) {
                   </div>
                 </motion.div>
 
-                {/* Module 3: 60-30-10 Daylight Palette */}
+                {/* Module 3: 60-30-10 Cosmic Tech Palette */}
                 <motion.div
                   drag
                   dragConstraints={constraintsRef}
@@ -262,25 +272,25 @@ export function MotionLabSection({ lang }: MotionLabSectionProps) {
                   whileDrag={{ scale: 1.02, zIndex: 20 }}
                   transition={springConfig}
                   onPointerDown={() => setActiveTile('palette')}
-                  className={`p-5 rounded-xl bg-white border cursor-grab active:cursor-grabbing select-none transition-colors ${
-                    activeTile === 'palette' ? 'border-[#2563EB]' : 'border-[#E2E8F0]'
+                  className={`p-5 rounded-xl bg-[#0C1222]/95 border cursor-grab active:cursor-grabbing select-none transition-colors ${
+                    activeTile === 'palette' ? 'border-[#7DD3FC]' : 'border-[#1E263D]'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-medium text-[#0F172A]">
-                      {lang === 'zh' ? '60-30-10 浅色色阶' : '60-30-10 Daylight Ratio'}
+                    <span className="text-xs font-medium text-[#F8FAFC]">
+                      {lang === 'zh' ? '60-30-10 星辰色阶' : '60-30-10 Cosmic Ratio'}
                     </span>
-                    <Move className="w-3.5 h-3.5 text-[#94A3B8]" />
+                    <Move className="w-3.5 h-3.5 text-[#64748B]" />
                   </div>
-                  <div className="flex h-7 rounded-md overflow-hidden border border-[#E2E8F0]">
-                    <div className="w-[60%] bg-[#F8FAFC]" title="60% Canvas" />
-                    <div className="w-[30%] bg-[#E2E8F0]" title="30% Surface" />
-                    <div className="w-[10%] bg-[#2563EB]" title="10% Accent" />
+                  <div className="flex h-7 rounded-md overflow-hidden border border-[#1E263D]">
+                    <div className="w-[60%] bg-[#05070E]" title="60% Canvas" />
+                    <div className="w-[30%] bg-[#172038]" title="30% Surface" />
+                    <div className="w-[10%] bg-gradient-to-b from-[#7DD3FC] to-[#A78BFA]" title="10% Accent" />
                   </div>
                   <div className="mt-2.5 flex items-center justify-between text-[11px] font-mono-tabular text-[#64748B]">
-                    <span>#F8FAFC</span>
-                    <span>#E2E8F0</span>
-                    <span className="text-[#2563EB]">#2563EB</span>
+                    <span>#05070E</span>
+                    <span>#172038</span>
+                    <span className="text-[#7DD3FC]">#7DD3FC</span>
                   </div>
                 </motion.div>
 
@@ -294,17 +304,17 @@ export function MotionLabSection({ lang }: MotionLabSectionProps) {
                   whileDrag={{ scale: 1.02, zIndex: 20 }}
                   transition={springConfig}
                   onPointerDown={() => setActiveTile('type')}
-                  className={`p-5 rounded-xl bg-white border cursor-grab active:cursor-grabbing select-none transition-colors ${
-                    activeTile === 'type' ? 'border-[#2563EB]' : 'border-[#E2E8F0]'
+                  className={`p-5 rounded-xl bg-[#0C1222]/95 border cursor-grab active:cursor-grabbing select-none transition-colors ${
+                    activeTile === 'type' ? 'border-[#7DD3FC]' : 'border-[#1E263D]'
                   }`}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-medium text-[#0F172A]">
+                    <span className="text-xs font-medium text-[#F8FAFC]">
                       {lang === 'zh' ? '双语排版标尺' : 'Bilingual Type Scale'}
                     </span>
-                    <Move className="w-3.5 h-3.5 text-[#94A3B8]" />
+                    <Move className="w-3.5 h-3.5 text-[#64748B]" />
                   </div>
-                  <div className="font-display text-2xl font-bold text-[#0F172A] tracking-tight">
+                  <div className="font-display text-2xl font-bold bg-gradient-to-r from-[#7DD3FC] to-[#A78BFA] bg-clip-text text-transparent tracking-tight">
                     Aa 永
                   </div>
                   <div className="mt-1 text-[11px] font-mono-tabular text-[#64748B]">
@@ -314,13 +324,13 @@ export function MotionLabSection({ lang }: MotionLabSectionProps) {
               </div>
 
               {/* Bottom Stage Guidance */}
-              <div className="text-xs text-[#64748B] flex items-center justify-between border-t border-[#E2E8F0] pt-3 bg-white/80">
+              <div className="text-xs text-[#64748B] flex items-center justify-between border-t border-[#1E263D] pt-3 bg-[#080C17]/90">
                 <span>
                   {lang === 'zh'
                     ? '提示：可直接拖动任意卡片，或点击旋钮与开关测试阻尼曲线'
-                    : 'Tip: Drag any flat module across the grid or click controls to feel the spring preset'}
+                    : 'Tip: Drag any module across the grid or click controls to feel the spring preset'}
                 </span>
-                <span className="font-mono-tabular text-[#2563EB] shrink-0">60fps</span>
+                <span className="font-mono-tabular text-[#7DD3FC] shrink-0">60fps</span>
               </div>
             </div>
           </div>
